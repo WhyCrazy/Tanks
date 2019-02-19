@@ -27,5 +27,12 @@ public class PlayerController : MonoBehaviour
         // We move the tank
         rb.velocity = transform.up * forward * Time.deltaTime * speed;
         rb.angularVelocity = -horizontal * Time.deltaTime * rotateSpeed;
+
+        // Set barrel rotation to look at mouse
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        Quaternion rot = barrelBase.transform.rotation;
+        rot.SetFromToRotation(-Vector3.up, (mousePos - barrelBase.transform.position));
+        barrelBase.transform.rotation = rot;
     }
 }
