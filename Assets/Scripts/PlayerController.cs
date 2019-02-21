@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
 
         // We move the tank
-        rb.velocity = transform.up * forward * Time.deltaTime * speed;
+        rb.velocity = -transform.up * forward * Time.deltaTime * speed;
         rb.angularVelocity = -horizontal * Time.deltaTime * rotateSpeed;
 
         // Set barrel rotation to look at mouse
