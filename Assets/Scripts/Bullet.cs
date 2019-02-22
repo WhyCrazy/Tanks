@@ -14,7 +14,8 @@ public class Bullet : MonoBehaviour
     // On collision we destroy the bullet and spawn an explosion
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        GameObject newExplosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        newExplosion.transform.localScale = new Vector3(1f, 1f, 1f);
         Destroy(gameObject);
     }
 }

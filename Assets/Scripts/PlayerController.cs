@@ -3,6 +3,10 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+
+    [Tooltip("Explosion prefab")]
+    public GameObject explosionPrefab;
+
     [Tooltip("Base of the barrel of the tank")]
     public Transform barrelBase;
 
@@ -14,7 +18,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb; // Component that control the physics of the object
 
-    private const float speed = 200f;
+    public float speed = 200f;
+    private int health = 100;
     private const float rotateSpeed = 3500f;
     private const float bulletSpeed = 10f;
 
@@ -48,5 +53,18 @@ public class PlayerController : MonoBehaviour
             GameObject go = Instantiate(bulletPrefab, barrelOutput.position, rot * Quaternion.Euler(180f, 0f, 0f));
             go.GetComponent<Rigidbody2D>().AddForce(go.transform.up * bulletSpeed, ForceMode2D.Impulse);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        health -= 20;
+        if (health <= 0) { 
+            GameObject newExplosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            newExplosion.transform.localScale = new Vector3(3f, 3f, 3f);
+            //SpriteRenderer sprite_body = GetComponent<SpriteRenderer>();
+            //sprite_body.enabled = false;
+            gameObject.SetActive(false);
+        }
+        Debug.Log(health);
     }
 }
